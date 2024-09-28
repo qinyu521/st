@@ -1,0 +1,333 @@
+mode: rule
+log-level: info
+dns:
+  # 解析非 IP 的 dns 用的 dns 服务器,只支持纯 IP
+  default-nameserver: [223.5.5.5, 119.29.29.29, 180.184.1.1]
+  # fake ip 白名单列表'以下地址不会下发fakeip映射用于连接
+  fake-ip-filter: ['+.lan', '*', '+.local', '+.cmpassport.com', 'id6.me', 'open.e.189.cn', 'mdn.open.wo.cn', 'opencloud.wostore.cn', 'auth.wosms.cn', '+.10099.com.cn']
+  # 默认的域名解析服务器
+  nameserver: ['quic://223.5.5.5', 'quic://223.6.6.6', 'https://1.12.12.12/dns-query', 'https://120.53.53.53/dns-query']
+# > 订阅信息展示
+subscribe-url:
+# > 远程服务器
+proxy-providers:
+  Subscribe:
+    interval: 86400
+    url: https://url.happyhour.lol/Happyhour
+    benchmark-timeout: 5
+    benchmark-url: http://connectivitycheck.gstatic.com/generate_204
+proxy-groups:
+  # 分流分组
+  - {name: 手动切换, icon: 'https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/%24tash.png', type: select, include-all: true, proxies: [香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点, DIRECT]}
+  - {name: 国外网站, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 国际媒体, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 微软服务, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 谷歌服务, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 电报消息, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 推特消息, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: AI, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 游戏平台, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点, DIRECT]}
+  - {name: Emby, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png', type: select, include-all: true, proxies: [香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: Spotify, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点]}
+  - {name: 兜底分流, icon: 'https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/friestash.png', type: select, proxies: [手动切换, 香港节点, 美国节点, 狮城节点, 日本节点, 台湾节点, DIRECT]}
+  # 节点地区分流
+  - {name: 香港节点, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png', type: url-test, interval: 300, include-all: true, filter: "(?i)🇭🇰|香港|(\b(HK|Hong)\b)"}
+  - {name: 美国节点, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png', type: url-test, interval: 300, include-all: true, filter: "(?i)🇺🇸|美国|洛杉矶|圣何塞|(\b(US|United States)\b)"}
+  - {name: 狮城节点, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png', type: url-test, interval: 300, include-all: true, filter: "(?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)"}
+  - {name: 日本节点, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png', type: url-test, interval: 300, include-all: true, filter: "(?i)🇯🇵|日本|东京|(\b(JP|Japan)\b)"}
+  - {name: 台湾节点, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png', type: url-test, interval: 300, include-all: true, filter: "(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)"}
+rule-providers:
+  # 局域网   
+  Lan: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Lan.list'}
+  #广告拦截
+  Reject: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Reject.list'}
+  # 苹果服务
+  Apple: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Apple.list'}
+  AppleProxy: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/AppleProxy.list'}
+  # 微软服务 
+  Microsoft: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Microsoft.list'}
+  OneDrive: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/OneDrive.list'}
+  Github: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Github.list'}
+  # 谷歌服务
+  Youtube: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/YouTube.list'}
+  Google: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Google.list'}
+  # 电报消息
+  Telegram: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Telegram.list'}
+  # 推特消息
+  Twitter: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Twitter.list'}
+  # 游戏平台
+  Steam: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Steam.list'}
+  Epic: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Epic.list'}
+  # AI平台
+  AI: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/AI.list'}
+  # Emby
+  Emby: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Emby.list'}
+  # Spotify
+  Spotify: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Spotify.list'}
+  # 国际媒体
+  Bahamut: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Bahamut.list'}
+  Netflix: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Netflix.list'}
+  Disney: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/Disney.list'}
+  PrimeVideo: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/PrimeVideo.list'}
+  HBO: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/HBO.list'}
+  TikTok: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/TikTok.list'}
+  # 代理网站
+  ProxyGFW: {behavior: classical, format: text, interval: 86400, url: 'https://github.com/Repcz/Tool/raw/X/Stash/Rules/ProxyGFW.list'}
+rules:
+  - RULE-SET,Reject,REJECT
+  - RULE-SET,AI,AI
+  - RULE-SET,Github,微软服务
+  - RULE-SET,OneDrive,微软服务
+  - RULE-SET,Microsoft,微软服务
+  - RULE-SET,Youtube,谷歌服务
+  - RULE-SET,Google,谷歌服务
+  - RULE-SET,Twitter,推特消息
+  - RULE-SET,Telegram,电报消息
+  - RULE-SET,Steam,游戏平台
+  - RULE-SET,Epic,游戏平台
+  - RULE-SET,Emby,Emby
+  - RULE-SET,Bahamut,国际媒体
+  - RULE-SET,Netflix,国际媒体
+  - RULE-SET,Disney,国际媒体
+  - RULE-SET,PrimeVideo,国际媒体
+  - RULE-SET,HBO,国际媒体
+  - RULE-SET,TikTok,国际媒体
+  - RULE-SET,Spotify,Spotify
+  - RULE-SET,ProxyGFW,国外网站
+  - RULE-SET,AppleProxy,国外网站
+  - RULE-SET,Apple,DIRECT
+  - RULE-SET,Lan,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,兜底分流
+payload:
+#玩偶哥哥（直连）
+  - DOMAIN-KEYWORD, wogg
+  - DOMAIN-SUFFIX,wogg.link
+  - DOMAIN-SUFFIX,wogg.xyz
+  - DOMAIN-SUFFIX, xxooo.cf
+#玩偶表哥（直连）
+  - DOMAIN-KEYWORD, wobge.run
+#小纸条（直连）
+  - DOMAIN-SUFFIX,gitcafe.net
+#jojo（直连）
+  - DOMAIN-SUFFIX,jiohub.top
+#阿里小站（直连）
+  - DOMAIN-KEYWORD,pan666
+  - DOMAIN-SUFFIX, pan666.net
+#云盘资源（直连）
+  - DOMAIN-KEYWORD,yunpan
+  - DOMAIN-SUFFIX, yunpan1.cc
+#厂长资源（直连）
+  - DOMAIN-KEYWORD, czzy
+  - DOMAIN-KEYWORD, czys
+  - DOMAIN-SUFFIX,czzy88.com
+  - DOMAIN-SUFFIX,czzy22.com
+  - DOMAIN-SUFFIX,czzy66.com
+  - DOMAIN-SUFFIX,cz233.com
+  - DOMAIN-SUFFIX, czys.top
+  - DOMAIN-SUFFIX, czzy77.com
+#在线之家（直连）
+  - DOMAIN-KEYWORD, zxzj
+  - DOMAIN-SUFFIX,zxzja.com  
+  - DOMAIN-SUFFIX,zxzjhd.com  
+  - DOMAIN-SUFFIX,zxzj.pro  
+#低端影视（直连）
+  - DOMAIN-KEYWORD, ddys
+  - DOMAIN-SUFFIX,ddys.pro  
+  - DOMAIN-SUFFIX,ddys.mov 
+#AGE动漫（直连）
+  - DOMAIN-SUFFIX,agedm.org
+#哔嘀影视（直连）
+  - DOMAIN-KEYWORD, bdys
+  - DOMAIN-SUFFIX, bdys10.com
+#索尼资源（直连）
+  - DOMAIN-SUFFIX,suoniapi.com  
+  - DOMAIN,v3.sxzyhuij.com  
+  - DOMAIN,v3.suonizy-youku.com  
+  - DOMAIN,v8.sxzyhuij.com  
+  - DOMAIN,snzypic.com  
+  - DOMAIN,v8.suonizy-youku.com  
+#非凡资源（直连）
+  - DOMAIN-SUFFIX,ffzyapi.com  
+#红牛资源（直连）
+  - DOMAIN-SUFFIX,hongniuzy2.com  
+#量子资源（直连）
+  - DOMAIN-SUFFIX,lziapi.com  
+#快车资源（直连）
+  - DOMAIN-SUFFIX,kczyapi.com  
+#三九影視（直连）
+  - DOMAIN-SUFFIX,39kan.com  
+#闪电资源（直连）
+  - DOMAIN-SUFFIX,sdzyapi.com  
+#樱花资源（直连）
+  - DOMAIN-SUFFIX,apiyhzy.com  
+#卧龙资源（直连）
+  - DOMAIN-SUFFIX,wolongzyw.com  
+#飘花影院（直连）
+  - DOMAIN-SUFFIX,ahjiuman.com  
+#虎牙资源（直连）
+  - DOMAIN-SUFFIX,huyaapi.com  
+#百度资源（直连）
+  - DOMAIN-SUFFIX,apibdzy.com  
+#飘零影院（直连）
+  - DOMAIN-SUFFIX,p2100.net  
+#无尽资源（直连）
+  - DOMAIN-SUFFIX,wujinapi.com  
+#速博资源（直连）
+  - DOMAIN-SUFFIX,subocaiji.com  
+#乐视资源（直连）
+  - DOMAIN-SUFFIX,leshizyapi.com  
+#探索页（直连）
+  - DOMAIN-SUFFIX,infuseku.xyz  
+#魔都动漫（直连）
+  - DOMAIN-SUFFIX,moduapi.cc  
+#最大资源（直连）
+  - DOMAIN-SUFFIX,zuidazy.me  
+#奇虎资源（直连）
+  - DOMAIN-SUFFIX,qhzyapi.com  
+#火狐资源（直连）
+  - DOMAIN-SUFFIX,hhzyapi.com  
+#享看资源（直连）
+  - DOMAIN-SUFFIX,xkanzy10.com  
+#新浪资源（直连）
+  - DOMAIN-SUFFIX,xinlangapi.com  
+#快云资源（直连）
+  - DOMAIN-SUFFIX,kuaiyunzy.com  
+#四圈资源（直连）
+  - DOMAIN-SUFFIX,fenwe078.cf   
+#快看资源（直连）
+  - DOMAIN-SUFFIX,kuaikanzy.net  
+#厂长&低端播放
+  - DOMAIN-SUFFIX,cz01.site  
+  - DOMAIN-SUFFIX,larksuitecdn.com  
+  - DOMAIN-SUFFIX,fotile.com  
+  - DOMAIN-SUFFIX,pstatp.com  
+  - DOMAIN-SUFFIX,ugdtimg.com  
+  - DOMAIN-SUFFIX,ctyunxs.cn  
+  - DOMAIN,wxsnsencsvp.wxs.qq.com  
+#哔嘀播放
+  - DOMAIN-SUFFIX,ibytedtos.com  
+  - DOMAIN-SUFFIX,toutiao50.com  
+  - DOMAIN-SUFFIX,ibyteimg.com  
+#网盘播放
+  - DOMAIN-KEYWORD, ts.com
+  - DOMAIN-KEYWORD, quark
+  - DOMAIN, drive-pc.quark.cn
+  - DOMAIN-KEYWORD, aliyun
+  - DOMAIN-SUFFIX,aliyundrive.asia  
+  - DOMAIN-SUFFIX,alicloudccp.com  
+  - DOMAIN,openapi.aliyundrive.com  
+  - DOMAIN,auth.aliyundrive.com  
+  - DOMAIN,api.aliyundrive.com  
+#豆瓣封面
+  - DOMAIN-SUFFIX,doubanio.com  
+#同步数据
+  - DOMAIN,gateway.icloud.com  
+#杂七杂八的播放
+  - DOMAIN-SUFFIX, 4k-av.com
+  - DOMAIN, ppvod01.blbtgg.com
+  - DOMAIN-SUFFIX, zaqohu.com
+  - DOMAIN-SUFFIX, xjqxz.top
+  - DOMAIN-SUFFIX, wjm.xpgtv.net
+   -DOMAIN-SUFFIX, vvmlm.com
+  - DOMAIN-SUFFIX, akamaized.net
+  - DOMAIN-SUFFIX, wegame.com.cn
+  - DOMAIN-SUFFIX, tc.qq.com
+  - DOMAIN-SUFFIX, centos.chat
+  - DOMAIN-SUFFIX, bilfun.cc
+  - DOMAIN-SUFFIX, novipnoad.net
+  - DOMAIN-SUFFIX, yangkeduo.com
+  - DOMAIN-SUFFIX, xingya.com.cn
+  - DOMAIN-SUFFIX, whjzjx.cn
+  - DOMAIN-SUFFIX, mediap.svc.ms
+  - DOMAIN, n45lxpvts.com
+  - DOMAIN, yk7ynj4ts.com
+  - DOMAIN, r8qgyo0ts.com
+  - DOMAIN, 9t5af8lts.com
+  - DOMAIN, d4y3409ts.com
+  - DOMAIN, 3zj55vots.com
+  - DOMAIN-KEYWORD, heimuer
+  - DOMAIN-SUFFIX, m3u8.girigirilove.com
+  - DOMAIN-SUFFIX, cloudflarestorage.com
+  - DOMAIN-SUFFIX, ho7k.com
+  - DOMAIN-SUFFIX, dsakf23665.com
+  - DOMAIN-SUFFIX, 115.com
+  - DOMAIN-SUFFIX, mgtv.com
+  - DOMAIN-SUFFIX, timizy.com
+  - DOMAIN-KEYWORD, ghw9zwp5
+  - DOMAIN-SUFFIX, ywxohs.com
+  - DOMAIN-SUFFIX, miyoushe.com
+  - DOMAIN-KEYWORD, media-oss
+  - DOMAIN-SUFFIX, netease.com
+  - DOMAIN-SUFFIX, aliyuncs.com
+  - DOMAIN-SUFFIX, xmcdn.com
+  - DOMAIN-SUFFIX, anfuns.org
+  - DOMAIN-KEYWORD, hmrvideo
+  - DOMAIN-SUFFIX, ykusu.ykusu
+  - DOMAIN-SUFFIX, myqcloud.com
+  - DOMAIN-SUFFIX, esuxun.com
+  - DOMAIN-KEYWORD, duanjutt
+  - DOMAIN-KEYWORD, suxun
+  - DOMAIN-KEYWORD, ffzy
+  - DOMAIN-KEYWORD, cdnlz
+  - DOMAIN-KEYWORD, lzcdn
+  - DOMAIN-SUFFIX, bfengbf.com
+  - DOMAIN-SUFFIX, bfikuncdn.com
+  - DOMAIN-KEYWORD, tencent-1257389134.cos
+  - DOMAIN, gvideo.qpic.cn
+  - DOMAIN, media-hncs-fy-person.hn12oss.ctyunxs.cn
+  - DOMAIN, qchannelvideo.photo.qq.com
+  - DOMAIN, sf16-sg.larksuitecdn.com
+  - DOMAIN, op.xn--it-if7c19g5s4bps5c.com
+  - DOMAIN, tjdownload.pan.wo.cn
+  - DOMAIN-SUFFIX, nkvod.com
+  - DOMAIN-SUFFIX, 13to.com
+  - DOMAIN-KEYWORD, thehanju
+  - DOMAIN-KEYWORD, hanjukankan
+  - DOMAIN-KEYWORD, subaibaiys
+  - DOMAIN-SUFFIX, xhscdn.com
+  - DOMAIN-KEYWORD, wangchuanxin
+  - DOMAIN-SUFFIX, vod-qcloud.com
+  - DOMAIN-KEYWORD, hhplayer
+  - DOMAIN-KEYWORD, saohuo
+  - DOMAIN-KEYWORD, bttwo
+  - DOMAIN-SUFFIX, dandanplay.net
+  - DOMAIN-SUFFIX, mcloud.139.com
+  - DOMAIN-SUFFIX, jiasu.buzz
+  - DOMAIN-KEYWORD, feidaozy
+  - DOMAIN-KEYWORD, modujx
+  - DOMAIN-KEYWORD, simanuo
+  - DOMAIN-SUFFIX, huawei8.live
+  - DOMAIN-SUFFIX, hw8.live
+  - DOMAIN-KEYWORD, heimuer
+  - DOMAIN-KEYWORD, hhuus
+  - DOMAIN-KEYWORD, hhwenjian
+  - DOMAIN, hhmage.com
+  - DOMAIN, xinlangtupian.com
+  - DOMAIN-KEYWORD, xlzyd
+  - DOMAIN,ikunzyapi.com
+  - DOMAIN-KEYWORD,ikzybf
+  - DOMAIN-KEYWORD,49zyvideoplayurl
+  - DOMAIN-KEYWORD,v.cdnlz  
+  - DOMAIN-KEYWORD,vip.kuaikan  
+  - DOMAIN-KEYWORD,vip.ffzy  
+  - DOMAIN,vod2.kczybf.com  
+  - DOMAIN,top.1080pzy.co  
+  - DOMAIN,c3.monidai.com  
+  - DOMAIN,pan.dy066.com  
+  - DOMAIN,hey11.cjkypo.com  
+  - DOMAIN,hnts.ymuuy.com  
+  - DOMAIN,hnzy.bfvvs.com  
+  - DOMAIN-SUFFIX,maimn.com  
+  - DOMAIN,img.lzzyimg.com  
+  - DOMAIN,vip.ffzy-play5.com  
+  - DOMAIN,vip.ffzy-online6.com  
+  - DOMAIN,sss.image8899.net  
+  - DOMAIN,ikcdn01.ikzybf.com  
+  - DOMAIN,vip.ffzy-play9.com  
+  - DOMAIN,svip.picffzy.com  
+  - DOMAIN,vip.imgffzy.com  
+  - DOMAIN,vip.ffzyread1.com  
+  - DOMAIN,git.886.be
+
+
