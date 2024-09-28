@@ -99,7 +99,7 @@ rules:
   - RULE-SET,Lan,DIRECT
   - GEOIP,CN,DIRECT
   - MATCH,兜底分流
-payload:
+
 #玩偶哥哥（直连）
   - DOMAIN-KEYWORD, wogg
   - DOMAIN-SUFFIX,wogg.link
